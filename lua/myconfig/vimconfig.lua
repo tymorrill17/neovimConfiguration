@@ -75,6 +75,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
+-- vim.o.background = 'light'
 
 vim.o.signcolumn = 'yes'
 
@@ -95,7 +96,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     end,
 })
 
-vim.cmd([[colorscheme habamax]])
+vim.cmd([[colorscheme vague]])
 
 vim.opt.completeopt = { "menuone", "noselect", "popup" }
 

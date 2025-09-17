@@ -1,15 +1,14 @@
 
 -- Mapleaders
-vim.g.mapleader = ","
-vim.g.maplocalleader = "," -- not sure what localleaders are used for but this might be a good alt: "\\"
+vim.g.mapleader = " "
+vim.g.maplocalleader = " " -- not sure what localleaders are used for but this might be a good alt: "\\"
 
 -- Easier save and quit
 vim.keymap.set('n','<leader>w',':write<CR>')
 vim.keymap.set('n','<leader>q',':quit<CR>')
 
 -- Set space and C-space to search forwards and backwards
-vim.keymap.set('n','<space>','/')
-vim.keymap.set('n','<C-space>','?')
+vim.keymap.set('n','<leader><leader>','/')
 
 -- Easier way of moving between windows
 vim.keymap.set('n','<C-j>','<C-w>j')
