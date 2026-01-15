@@ -13,23 +13,17 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
-
--- Add the lazypath to the runtimepath
 vim.opt.rtp:prepend(lazypath)
-
--- This is also a good place to setup other settings (vim.opt)
 
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
     -- import your plugins
-    { import = "myconfig.plugins" },
+    { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-
-  -- install = { colorscheme = { "habamax" } },
-
+  install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
