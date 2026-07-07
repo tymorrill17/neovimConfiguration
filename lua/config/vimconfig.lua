@@ -96,7 +96,47 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     end,
 })
 
-vim.cmd([[colorscheme vague]])
+vim.cmd([[colorscheme nightfly]])
 
 vim.opt.completeopt = { "menuone", "noselect", "popup" }
 
+vim.g.loaded_python3_provider = 0
+
+--- helpers used to save neovim settings on exit
+local function read_file(path)
+    local file = io.open(path, "r")
+    if not file then
+        return "dark"
+    end
+    local content = file:read("*line")
+    file:close()
+    return content
+end
+
+local function write_file(path, line)
+    local file = io.open(path, "w")
+    if not file then
+        return
+    end
+    file:write(tostring(line))
+    file:close()
+    return
+end
+
+--- Save light/dark mode setting when leaving neovim
+local ldmode_file = vim.fn.expand("~/.config/nvim/lightdarkmode.txt")
+vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+        local val = vim.opt.background:get()
+        write_file(ldmode_file, val)
+    end
+})
+if vim.fn.filereadable(ldmode_file) then
+    local val = read_file(ldmode_file)
+    vim.opt.background = val
+end
+
+vim.g.clipboard = "wl-copy"
+
+--- Configure netrw to have line numbers and other things
+-- vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'

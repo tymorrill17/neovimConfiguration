@@ -20,7 +20,8 @@ vim.keymap.set('n','<C-l>','<C-w>l')
 vim.keymap.set('n','<leader><CR>',':noh<CR>')
 
 -- Open the file explorer
-vim.keymap.set('n','<leader>pl',vim.cmd.Ex)
+-- vim.keymap.set('n','<leader>pl',vim.cmd.Ex)
+vim.keymap.set('n','<leader>pl', vim.cmd.Oil)
 
 -- Move selected up or down lines
 vim.keymap.set('v','J',":m '>+1<CR>gv=gv")
@@ -43,18 +44,38 @@ vim.keymap.set('n','Q','<nop>')
 -- One way to make replacing better:
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- replace the word at the cursor
 
--- temporary binds --
-vim.keymap.set('n','<leader>o',':update<CR> :source<CR>')
--- Temporary disabling of arrow keys to move
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
--- temporary binds --
+---- temporary binds --
+--vim.keymap.set('n','<leader>o',':update<CR> :source<CR>')
+---- Temporary disabling of arrow keys to move
+--vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+--vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+--vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+--vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+---- temporary binds --
 
+local function set_dark_mode()
+  vim.api.nvim_set_option_value("background", "dark", {})
+  ---vim.cmd([[colorscheme tokyonight-moon]])
+end
 
+local function set_light_mode()
+  vim.api.nvim_set_option_value("background", "light", {})
+  ---vim.cmd([[colorscheme solarized]])
+end
 
+function toggle_light_and_dark()
+    if vim.o.background == "dark" then
+        set_light_mode()
+    else
+        set_dark_mode()
+    end
+end
 
+vim.keymap.set('n', '<leader>l', ':lua toggle_light_and_dark()<CR>')
+
+-- Terminal
+vim.keymap.set('t', '<esc>', '<C-\\><C-N>')
+vim.keymap.set('n', '<leader>t', ':ToggleTerm<CR>')
 
 
 
