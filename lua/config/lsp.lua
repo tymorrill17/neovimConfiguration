@@ -2,7 +2,7 @@ local lsps = {
     {
         "clangd", {
             init_options = {
-                fallbackFlags = {'--std=c++23'}
+                ---fallbackFlags = {'--std=c++23'}
             },
             cmd = { "clangd" },
             filetypes = { "cpp", "c"},
