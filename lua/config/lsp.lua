@@ -1,12 +1,39 @@
+-- CUDA toolkit location + target arch. Override per-project with a .clangd file.
+local cuda_path = vim.env.CUDA_PATH or "/usr/local/cuda"
+local cuda_arch = "sm_86" -- change to match your GPU (sm_75 Turing, sm_86 Ampere, sm_89 Ada, sm_90 Hopper)
+
 local lsps = {
     {
         "clangd", {
-            init_options = {
-                ---fallbackFlags = {'--std=c++23'}
+            cmd = {
+                "clangd",
+                "--background-index",
+                "--clang-tidy",
+                "--header-insertion=never",
+                "--completion-style=detailed",
+                "--offset-encoding=utf-16",
             },
-            cmd = { "clangd" },
-            filetypes = { "cpp", "c"},
-            root_markers = { ".clangd" },
+            filetypes = { "c", "cpp", "cuda", "objc", "objcpp" },
+            root_markers = {
+                ".clangd",
+                "compile_commands.json",
+                "compile_flags.txt",
+                "CMakeLists.txt",
+                ".git",
+            },
+            init_options = {
+                -- Only used when there is no compile_commands.json entry for the file.
+                fallbackFlags = {
+                    "-std=c++17",
+                    "--cuda-path=" .. cuda_path,
+                    "--cuda-gpu-arch=" .. cuda_arch,
+                    "-I" .. cuda_path .. "/include",
+                    "-D__CUDACC__",
+                    -- silences the "CUDA version is newer than supported" error
+                    "-Wno-unknown-cuda-version",
+                },
+                clangdFileStatus = true,
+            },
         }
     },
     {
@@ -56,8 +83,8 @@ local lsps = {
 
 for _, lsp in pairs(lsps) do
     local name, config = lsp[1], lsp[2]
-    vim.lsp.enable(name)
     if config then
         vim.lsp.config(name, config)
     end
+    vim.lsp.enable(name)
 end
