@@ -55,12 +55,12 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 
 local function set_dark_mode()
   vim.api.nvim_set_option_value("background", "dark", {})
-  ---vim.cmd([[colorscheme tokyonight-moon]])
+  vim.cmd([[colorscheme nightfly]])
 end
 
 local function set_light_mode()
   vim.api.nvim_set_option_value("background", "light", {})
-  ---vim.cmd([[colorscheme solarized]])
+  vim.cmd([[colorscheme solarized]])
 end
 
 function toggle_light_and_dark()
