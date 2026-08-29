@@ -2,7 +2,38 @@
 local cuda_path = vim.env.CUDA_PATH or "/usr/local/cuda"
 local cuda_arch = "sm_86" -- change to match your GPU (sm_75 Turing, sm_86 Ampere, sm_89 Ada, sm_90 Hopper)
 
+local roslyn = require("config.lsp.roslyn")
+
+local roslyn_log_lvl = ({
+    [vim.log.levels.OFF] = "None",
+    [vim.log.levels.TRACE] = "Trace",
+    [vim.log.levels.DEBUG] = "Debug",
+    [vim.log.levels.INFO] = "Information",
+    [vim.log.levels.WARN] = "Warning",
+    [vim.log.levels.ERROR] = "Error",
+})[vim.lsp.log.get_level()] or "Information"
+
 local lsps = {
+    {
+        "roslyn_ls", {
+            cmd = {
+                "roslyn-language-server",
+                "--stdio",
+                "--autoLoadProjects=200",
+                "--logLevel=" .. roslyn_log_lvl,
+                "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.log.get_filename()),
+            },
+            filetypes = { "cs" },
+            root_markers = { "ProjectSettings" },
+            offset_encoding = "utf-8",
+            capabilities = {
+                textDocument = { diagnostic = { dynamicRegistration = true } },
+            },
+            handlers = roslyn.handlers,
+            settings = roslyn.settings,
+            detached = false,
+        }
+    },
     {
         "clangd", {
             cmd = {

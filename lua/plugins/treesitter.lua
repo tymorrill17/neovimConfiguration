@@ -27,7 +27,8 @@ return {
         -- Helper to start highlighting and indentation
         local function start(buf, lang)
             local ok = pcall(vim.treesitter.start, buf, lang)
-            if ok then
+            -- Only take over indenting when the parser actually ships an indents query.
+            if ok and vim.treesitter.query.get(lang, 'indents') then
                 vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
             end
             return ok
