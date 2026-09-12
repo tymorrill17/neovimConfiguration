@@ -25,12 +25,12 @@ vim.lsp.inlay_hint.enable(true)
 -- add LSPs to ignore here (same name as in ./lsps/ folder without the .lua extension)
 local lsp_ignore = {}
 -- load LSPs defined in ./lsps/ folder
-local p = vim.fs.joinpath(vim.fn.stdpath("config"), "lua", "lsps")
+local p = vim.fs.joinpath(vim.fn.stdpath("config"), "lua", "myconfig", "lsps")
 for lsp_name, _ in vim.fs.dir(p) do
   local status_ok, error_object = pcall(function()
     local lsp_id = lsp_name:gsub("%.lua", "")
     if lsp_ignore[lsp_id] == nil then
-      local lsp_config = require("lsps." .. lsp_id)
+      local lsp_config = require("myconfig.lsps." .. lsp_id)
       vim.lsp.config(lsp_id, lsp_config)
       vim.lsp.enable(lsp_id)
     end
