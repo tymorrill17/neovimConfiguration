@@ -1,0 +1,5 @@
+require("myconfig.remap")
+require("myconfig.lazy")
+require("myconfig.vimconfig")
+require("myconfig.dap")
+require("myconfig.lsp")
