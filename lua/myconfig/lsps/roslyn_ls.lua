@@ -473,7 +473,7 @@ local roslyn_ls_config = {
 
     -- here we supply same log path as the one used by current LSP client
     -- (hence why we use - somewhat - the same log level)
-    "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+    "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.log.get_filename()),
 
     "--stdio",
   },
