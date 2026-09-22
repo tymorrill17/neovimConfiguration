@@ -1,11 +1,3 @@
---- @brief
----
---- Rolsyn LS config largely adapted from:
---- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/roslyn_ls.lua
----
---- and also from roslyn.nvim plugin:
---- https://github.com/seblyng/roslyn.nvim
-
 --------------------------------------------------------------------------------
 -- NEOVIM UNITY GLOBALS
 --------------------------------------------------------------------------------
@@ -216,8 +208,8 @@ local roslyn_handlers = {
   ["workspace/projectInitializationComplete"] = function(_, _, ctx)
     vim.notify("Roslyn project initialization complete", vim.log.levels.INFO)
 
-    local buffers = vim.lsp.get_buffers_by_client_id(ctx.client_id)
     local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
+    local buffers = vim.tbl_keys(client.attached_buffers)
     local method = vim.lsp.protocol.Methods.textDocument_diagnostic
 
     if _G.nvim_unity_benchmark_roslyn_ls then
@@ -465,9 +457,9 @@ local roslyn_ls_config = {
     -- on Windows, you can simply directly call the executable:
     --  "<roslyn_ls_path>/Microsoft.CodeAnalysis.LanguageServer.exe",
     --  <roslyn-ls-path> is a placeholder for the path to the Roslyn LS dir
-    "dotnet",
-    "<roslyn_ls_path>/Microsoft.CodeAnalysis.LanguageServer.dll",
-
+    -- "dotnet",
+    -- "<roslyn_ls_path>/Microsoft.CodeAnalysis.LanguageServer.dll",
+    "roslyn-language-server",
     -- Critical|Debug|Error|Information|None|Trace|Warning
     "--logLevel=" .. lsp_log_lvl_to_roslyn_log_lvl[vim.lsp.log.get_level()],
 
@@ -528,4 +520,5 @@ local roslyn_ls_config = {
   detached = false,
 }
 
+-- then add Roslyn LS to core Neovim LSP and enable it
 return roslyn_ls_config

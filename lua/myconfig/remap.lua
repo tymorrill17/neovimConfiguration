@@ -1,48 +1,51 @@
-
 -- Mapleaders
 vim.g.mapleader = " "
 vim.g.maplocalleader = " " -- not sure what localleaders are used for but this might be a good alt: "\\"
 
 -- Easier save and quit
-vim.keymap.set('n','<leader>w',':write<CR>')
-vim.keymap.set('n','<leader>q',':quit<CR>')
+vim.keymap.set("n", "<leader>w", ":write<CR>")
+vim.keymap.set("n", "<leader>q", ":quit<CR>")
 
 -- Set space and C-space to search forwards and backwards
-vim.keymap.set('n','<leader><leader>','/')
+vim.keymap.set("n", "<leader><leader>", "/")
 
 -- Easier way of moving between windows
-vim.keymap.set('n','<C-j>','<C-w>j')
-vim.keymap.set('n','<C-k>','<C-w>k')
-vim.keymap.set('n','<C-h>','<C-w>h')
-vim.keymap.set('n','<C-l>','<C-w>l')
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 -- remove highlights
-vim.keymap.set('n','<leader><CR>',':noh<CR>')
+vim.keymap.set("n", "<leader><CR>", ":noh<CR>")
 
 -- Open the file explorer
 -- vim.keymap.set('n','<leader>pl',vim.cmd.Ex)
-vim.keymap.set('n','<leader>pl', vim.cmd.Oil)
+vim.keymap.set("n", "<leader>pl", vim.cmd.Oil)
 
 -- Move selected up or down lines
-vim.keymap.set('v','J',":m '>+1<CR>gv=gv")
-vim.keymap.set('v','K',":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Keep cursor in the middle when:
-vim.keymap.set('n','<C-d>','<C-d>zz') -- page down
-vim.keymap.set('n','<C-u>','<C-u>zz') -- page up
-vim.keymap.set('n','n','nzzzv') -- next word in search
-vim.keymap.set('n','N','Nzzzv') -- prev word in search
+vim.keymap.set("n", "<C-d>", "<C-d>zz") -- page down
+vim.keymap.set("n", "<C-u>", "<C-u>zz") -- page up
+vim.keymap.set("n", "n", "nzzzv") -- next word in search
+vim.keymap.set("n", "N", "Nzzzv") -- prev word in search
 
-vim.keymap.set('n','J',"mzJ`z") -- Keeps cursor where it's at when using J
+vim.keymap.set("n", "J", "mzJ`z") -- Keeps cursor where it's at when using J
 
 -- Paste and replace without overwriting buffer
-vim.keymap.set('x','<leader>p',"\"_dP")
+vim.keymap.set("x", "<leader>p", '"_dP')
 
 -- unmap Q
-vim.keymap.set('n','Q','<nop>')
+vim.keymap.set("n", "Q", "<nop>")
 
 -- One way to make replacing better:
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- replace the word at the cursor
+vim.keymap.set(
+  "n",
+  "<leader>s",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]
+) -- replace the word at the cursor
 
 ---- temporary binds --
 --vim.keymap.set('n','<leader>o',':update<CR> :source<CR>')
@@ -64,18 +67,19 @@ local function set_light_mode()
 end
 
 function toggle_light_and_dark()
-    if vim.o.background == "dark" then
-        set_light_mode()
-    else
-        set_dark_mode()
-    end
+  if vim.o.background == "dark" then
+    set_light_mode()
+  else
+    set_dark_mode()
+  end
 end
 
-vim.keymap.set('n', '<leader>l', ':lua toggle_light_and_dark()<CR>')
+vim.keymap.set("n", "<leader>l", ":lua toggle_light_and_dark()<CR>")
 
 -- Terminal
-vim.keymap.set('t', '<esc>', '<C-\\><C-N>')
-vim.keymap.set('n', '<leader>t', ':ToggleTerm<CR>')
+vim.keymap.set("t", "<esc>", "<C-\\><C-N>")
+vim.keymap.set("n", "<leader>t", ":ToggleTerm<CR>")
 
-
-
+vim.keymap.set("n", "<leader>ih", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "toggle inlay hints" })

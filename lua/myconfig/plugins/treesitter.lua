@@ -57,7 +57,6 @@ return {
           "make",
           "markdown",
           "markdown_inline",
-          "norg",
           "python",
           "query",
           "regex",
@@ -148,7 +147,9 @@ return {
         end
 
         -- Auto-install missing parsers (async, no-op if already installed)
-        ts.install({ lang })
+        if require("nvim-treesitter.parsers")[lang] then
+          ts.install({ lang })
+        end
       end,
     })
   end,
